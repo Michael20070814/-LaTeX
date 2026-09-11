@@ -66,22 +66,42 @@
 
 \begin{document}
 
-% ===== BEGIN B26 NEW MANUSCRIPT: safe to edit this block =====
+
+% ===== BEGIN B26 NEW MANUSCRIPT: framework revision 20260911 =====
 \begingroup
 \setlength{\emergencystretch}{2em}
-% Preserve the template's printed spacing while giving PDF bookmarks plain numbers.
 \renewcommand{\thesubsection}{\texorpdfstring{\arabic{section}\thinspace.\thinspace\arabic{subsection}}{\arabic{section}.\arabic{subsection}}}
-\renewcommand{\thesubsubsection}{\texorpdfstring{\thesubsection\thinspace.\thinspace\arabic{subsubsection}}{\arabic{section}.\arabic{subsection}.\arabic{subsubsection}}}
+\renewcommand{\thesubsubsection}{\texorpdfstring{\thesubsection\thinspace.\thinspace\arabic{subsubsection}}{\arabic{section}.\arabic{subsubsection}}}
+% Each placeholder can be replaced by prose without changing the chapter structure.
+% Remove the optional vertical spacing as the actual manuscript grows.
+\newcommand{\Bdrafttext}{我爱北京航空航天大学。我爱北京航空航天大学。我爱北京航空航天大学。我爱北京航空航天大学。}
+\newcommand{\Bdraftspace}{\Bdrafttext\par\vspace{0.7\baselineskip}\Bdrafttext\par\vspace{0.7cm}}
+\newcommand{\Bdraftfigure}[1]{%
+  \begin{figure}[htbp]\centering
+  \fbox{\parbox[c][3.2cm][c]{0.82\textwidth}{\centering 我爱北京航空航天大学}}
+  \caption{我爱北京航空航天大学}\label{#1}\end{figure}}
+\newcommand{\Bdrafttable}[1]{%
+  \begin{table}[htbp]\centering\caption{我爱北京航空航天大学}\label{#1}
+  \small\begin{tabular}{p{0.28\textwidth}p{0.28\textwidth}p{0.28\textwidth}}
+  \toprule
+  我爱北京航空航天大学 & 我爱北京航空航天大学 & 我爱北京航空航天大学\\
+  \midrule
+  我爱北京航空航天大学 & 我爱北京航空航天大学 & 我爱北京航空航天大学\\[0.5em]
+  我爱北京航空航天大学 & 我爱北京航空航天大学 & 我爱北京航空航天大学\\[0.5em]
+  我爱北京航空航天大学 & 我爱北京航空航天大学 & 我爱北京航空航天大学\\
+  \bottomrule\end{tabular}\end{table}}
 \begin{center}
-{\heiti\zihao{3}\bfseries 无线电干扰源的有界误差定位与主动测向选点\par}
-\vspace{0.6em}
-{\small 论文正文阶段稿：问题分析与第一、二问\par}
+{\heiti\zihao{3}\bfseries 无线电干扰源的有界误差定位与主动搜索清除\par}
 \end{center}
-\vspace{0.5em}
-% B26 manuscript body: problem analysis and solutions to Problems 1 and 2.
-% Required packages: amsmath, amssymb, booktabs, tikz.
-% All numerical examples in this file are synthetic, not official test results.
-
+\begin{abstract}
+\Bdrafttext\par
+\Bdrafttext\par
+\Bdrafttext\par
+\Bdrafttext\par
+\Bdrafttext\par
+\vspace{1cm}
+\keywords{我爱北京航空航天大学\quad 我爱北京航空航天大学\quad 我爱北京航空航天大学}
+\end{abstract}
 \section{问题重述}
 \subsection{研究背景}
 无线电干扰源的精准定位与清除是无线电频谱管理的重要环节。大范围监测虽然能够确定目标的大致分布区域，但在环境遮挡、干扰源功率不同以及测向误差的共同影响下，仍需移动设备进入目标区域进行交会测向和近距离确认。采用搭载测向机、光学探测仪和激光清除装置的机器狗，可以将人工逐点排查转化为自动搜索与决策问题。
@@ -120,381 +140,251 @@
 
 由式~\eqref{eq:b26-time}可知，增加一次测向是否值得，需要比较其减少的后续移动和光学搜索时间。问题一给出可靠的停止定位判据，问题二提供有效的下一站选择方法；两者共同服务于全任务用时目标。对于定向源，无信号还可能来自发射方向遮挡，不能直接解释成目标不在附近，因此问题二的全向接收保证不能原样推广到问题四。
 
+
+\clearpage
 \section{模型假设与约定}
-\begin{enumerate}
- \item 按题目二维模型处理源与机器狗的位置，在一次定位过程中目标位置、频道、有效接收半径及发射特征保持不变。
- \item 正常测向误差仅满足确定性界 $|\varepsilon_i|\leq1^\circ$；不假设其服从正态分布，也不假设同地点重复测量产生独立样本。
- \item 问题一的定位区域仅指闭角域交集。目标圆域和接收距离可在后续选点中作为附加先验，但不用于悄悄截断问题一的无界集合。
- \item 问题二限定目标为尚未清除的全向源。无信号、近场及正常示向度分别处理，缺失的示向度不作为角度零值输入模型。
- \item 理论推导使用 $\alpha=1^\circ$。接口保留两位小数，数值示例按舍入最大增加 $0.005^\circ$ 的保守方式取 $\bar\alpha=1.005^\circ$；这是一项实现余量，并非修改题面误差。
- \item 数值算例为明确设置的合成数据，仅用于验证公式与比较候选策略；不代表正式测试成绩，也不作为连续最优性的证明。
-\end{enumerate}
+\label{sec:b26-framework-3}
 
+\subsection{环境与运动假设}
+% 在此替换占位段落；保留论证、公式、算法或结果的写作空间。
+\Bdraftspace
+
+\subsection{信号传播与测向误差约定}
+% 在此替换占位段落；保留论证、公式、算法或结果的写作空间。
+\Bdraftspace
+
+\subsection{反馈信息与清除判定约定}
+% 在此替换占位段落；保留论证、公式、算法或结果的写作空间。
+\Bdraftspace
+
+\subsection{假设合理性与适用范围}
+% 在此替换占位段落；保留论证、公式、算法或结果的写作空间。
+\Bdraftspace
+
+\clearpage
 \section{符号说明}
-\begin{table}[H]
- \centering
- \caption{主要符号及含义}\label{tab:b26-symbols}
- \begin{tabular}{cl}
- \toprule
- 符号 & 含义 \\
- \midrule
- $g,\ s_i,\ q$ & 真实目标位置、第 $i$ 个检测点、待选第二检测点 \\
- $\theta_i,\alpha$ & 示向度及理论角误差上界 \\
- $R$ & 目标的未知有效接收半径，$1000\leq R\leq1500$ \\
- $W_i,\ P$ & 第 $i$ 个观测角域及其交集 \\
- $K,\widehat K$ & 加入距离先验的可行域及其保守多边形外近似 \\
- $D$ & 定位区域的直径 \\
- $c^*,R^*$ & 最小包围圆的圆心与半径 \\
- $u,v$ & 首次示向的单位向量及其左法向量 \\
- $\mathcal G$ & 首次正常反馈后的可能目标集合 \\
- $\mathcal C_{\mathrm{recv}},\mathcal C_4$ & 保证接收集合及四圆候选集合 \\
- $a,b,L$ & 第二站纵向、横向位移及设计移动预算 \\
- $J(q),\widehat J(q)$ & 连续最坏后验半径及其采样评分 \\
- \bottomrule
- \end{tabular}
-\end{table}
-除特别说明外，距离单位为米、时间单位为秒。记 $\overline B(c,r)=\{x:\|x-c\|_2\leq r\}$；二维叉积定义为 $a\times b=a_xb_y-a_yb_x$。涉及角度线性化时，角误差使用弧度制。
+\label{sec:b26-framework-4}
 
+\subsection{几何与测向符号}
+% 在此替换占位段落；保留论证、公式、算法或结果的写作空间。
+\Bdraftspace
+\Bdrafttable{tab:b26-framework-symbols}
+
+\subsection{时间成本与算法参数}
+% 在此替换占位段落；保留论证、公式、算法或结果的写作空间。
+\Bdraftspace
+
+\clearpage
 \section{问题一：交会定位区域的直径与覆盖圆}
+\label{sec:b26-framework-5}
+
 \subsection{观测角域的半平面表示}
-对于位置 $s_i=(x_i,y_i)^{\mathsf T}$ 处的正常示向度 $\theta_i$，定义边界方向
-\begin{equation}
- u_i^- =\begin{pmatrix}\cos(\theta_i-\alpha)\\ \sin(\theta_i-\alpha)\end{pmatrix},\qquad
- u_i^+ =\begin{pmatrix}\cos(\theta_i+\alpha)\\ \sin(\theta_i+\alpha)\end{pmatrix}.
-\end{equation}
-其闭角域为
-\begin{equation}
- W_i=\{x:u_i^-\times(x-s_i)\geq0,\quad u_i^+\times(x-s_i)\leq0\}.
- \label{eq:b26-wedge}
-\end{equation}
-两条有向约束同时成立，才能保留向前张开的角域并排除反向区域。三角函数表示还能自然处理 $0^\circ$ 与 $360^\circ$ 附近的跨界读数。
+% 在此替换占位段落；保留论证、公式、算法或结果的写作空间。
+\Bdraftspace
 
-将式~\eqref{eq:b26-wedge}写成矩阵形式，有
-\begin{equation}
- A_i=\begin{pmatrix}
- \sin(\theta_i-\alpha)&-\cos(\theta_i-\alpha)\\
- -\sin(\theta_i+\alpha)&\cos(\theta_i+\alpha)
- \end{pmatrix},\qquad b_i=A_i s_i.
-\end{equation}
-叠加 $n$ 次观测，得到由 $2n$ 个半平面描述的定位区域
-\begin{equation}
- P=\bigcap_{i=1}^nW_i=\{x:Ax\leq b\}.
- \label{eq:b26-region}
-\end{equation}
-该定义按交会几何取闭包，不额外挖去检测点周围的 $5\,\mathrm{m}$ 圆盘。若加入近场排除信息，集合可能不再是凸多边形，需另行处理。
+\subsection{区域分类与顶点求解}
+% 在此替换占位段落；保留论证、公式、算法或结果的写作空间。
+\Bdraftspace
 
-\subsection{区域分类与顶点求解算法}
-首先归一化各约束的法向量，并求解线性可行性问题 $Ax\leq b$。若不可行，则输出空集及观测不一致提示，不以直径零代替。若可行，分别求解 $x$、$-x$、$y$、$-y$ 四个方向的线性最小化问题；任一目标无界时，$P$ 无界，其直径为 $+\infty$。四个坐标方向均有界，则 $P$ 是有界闭凸集。
+\subsection{最远点对与区域直径计算}
+% 在此替换占位段落；保留论证、公式、算法或结果的写作空间。
+\Bdraftspace
+\Bdraftfigure{fig:b26-framework-5}
 
-对于非空有界情形，采用如下可审计的基准算法。
-\begin{enumerate}
- \item 枚举两条不平行的边界直线，求解对应的 $2\times2$ 线性方程组。
- \item 检查交点是否满足全部 $2n$ 个约束，只保留可行交点；按明确的数值容差去重。
- \item 对候选交点计算凸包，获得按边界顺序排列的顶点 $v_1,\ldots,v_m$。单点、共线线段单独分类。
- \item 枚举所有顶点对，返回最大距离及取得最大值的一对端点，作为结果的直接验证依据。
-\end{enumerate}
-顶点生成部分至多枚举 $O(n^2)$ 个交点，每个交点检查 $O(n)$ 条约束，因此复杂度为 $O(n^3)$；顶点对距离计算为 $O(m^2)$，此外包括固定次数的二维线性规划。少量观测下该方法便于实现和检查。若观测数量显著增加，可用排序后的半平面交将几何求交降为 $O(n\log n)$，并以旋转卡壳在 $O(m)$ 时间内计算凸多边形直径；这属于可选扩展，当前程序采用基准算法。
+\clearpage
 
-\subsection{直径由最远顶点对取得的证明}
-非空有界多边形的任意两点可写为顶点的凸组合：
-\[
- x=\sum_i\lambda_i v_i,\qquad y=\sum_j\mu_j v_j,\qquad
- \lambda_i,\mu_j\geq0,\quad \sum_i\lambda_i=\sum_j\mu_j=1.
-\]
-利用三角不等式，有
-\begin{align}
- \|x-y\|_2
- &=\left\|\sum_{i,j}\lambda_i\mu_j(v_i-v_j)\right\|_2\notag\\
- &\leq\sum_{i,j}\lambda_i\mu_j\|v_i-v_j\|_2
- \leq\max_{i,j}\|v_i-v_j\|_2.
-\end{align}
-由于顶点本身属于 $P$，上界可以达到，故
-\begin{equation}
- \boxed{D(P)=\max_{1\leq i,j\leq m}\|v_i-v_j\|_2.}
- \label{eq:b26-diameter}
-\end{equation}
-该结论对线段与单点同样成立，单点直径为零。
+\subsection{同直径圆覆盖的判定与反例}
+% 在此替换占位段落；保留论证、公式、算法或结果的写作空间。
+\Bdraftspace
 
-\subsection{同直径圆不能总是覆盖定位区域}
-构造等边三角形
-\[
- V_1=(0,0),\qquad V_2=(40,0),\qquad V_3=(20,20\sqrt3).
-\]
-其区域直径为 $D=40$。为说明该反例确实能够由题设观测产生，而非任意假设一个多边形，取
-\begin{equation}
- \begin{aligned}
- S_1&=(-1200,0),            &\theta_1&=1^\circ,\\
- S_2&=(640,-600\sqrt3),    &\theta_2&=121^\circ,\\
- S_3&=(620,620\sqrt3),     &\theta_3&=241^\circ.
- \end{aligned}
- \label{eq:b26-counterexample}
-\end{equation}
-每个检测点位于一条三角形边的反向延长线上，其示向度比该边的正向角大 $1^\circ$。因此各观测角域的一条边恰为三角形的支持直线，另一条边对三个顶点不活跃。各顶点相对相应边方向的偏角为 $0^\circ$ 或约 $1.626435^\circ$，落在 $[0^\circ,2^\circ]$ 内，三个角域的交集恰为该等边三角形。检测点到三角形顶点的距离不超过 $1240\,\mathrm{m}$；以重心为真实源并取有效半径 $1500\,\mathrm{m}$，可得到满足题目条件的观测。
+\subsection{最小包围圆与可靠清除准则}
+% 在此替换占位段落；保留论证、公式、算法或结果的写作空间。
+\Bdraftspace
 
-设三角形重心为 $g_0$，任意候选圆心为 $c$，则
-\begin{equation}
- \sum_{i=1}^3\|V_i-c\|_2^2
- =\sum_{i=1}^3\|V_i-g_0\|_2^2+3\|g_0-c\|_2^2
- =D^2+3\|g_0-c\|_2^2\geq D^2.
-\end{equation}
-故至少一个顶点到 $c$ 的距离不小于 $D/\sqrt3$；取 $c=g_0$ 达到等号。因此该区域的最小包围圆半径为
-\begin{equation}
- R^*=\frac{40}{\sqrt3}\approx23.0940>\frac D2=20.
-\end{equation}
-这证明不存在任何直径为 $40\,\mathrm{m}$ 的圆能够覆盖该定位区域。
+\subsection{算法流程、复杂度与算例验证}
+% 在此替换占位段落；保留论证、公式、算法或结果的写作空间。
+\Bdraftspace
 
-\begin{figure}[htbp]
- \centering
- \begin{tikzpicture}[scale=0.85]
-  \fill[blue!7] (0,0)--(4,0)--(2,3.4641)--cycle;
-  \draw[blue!65!black,thick] (2,1.1547) circle (2.3094);
-  \draw[red!75!black,dashed,thick] (2,0) circle (2);
-  \draw[thick] (0,0)--(4,0)--(2,3.4641)--cycle;
-  \fill (0,0) circle (2pt) node[below left] {$V_1$};
-  \fill (4,0) circle (2pt) node[below right] {$V_2$};
-  \fill (2,3.4641) circle (2pt) node[above] {$V_3$};
-  \fill[blue!65!black] (2,1.1547) circle (2pt) node[right] {$c^*$};
-  \draw[blue!65!black] (2,1.1547)--(4,0);
-  \node at (2,-0.4) {$D=40$};
-  \node[anchor=west,align=left] at (5,2.5) {实线：最小包围圆\\$R^*=40/\sqrt3$};
-  \node[anchor=west,align=left] at (5,0.8) {虚线：最长边的直径圆\\半径为 $20$，不能覆盖 $V_3$};
- \end{tikzpicture}
- \caption{可由三次有界误差测向形成的等边三角形反例，长度单位为米}
- \label{fig:b26-triangle}
-\end{figure}
-
-\subsection{覆盖判定与光学清除准则}
-定义最小包围圆问题
-\begin{equation}
- R^*=\min_c\max_{x\in P}\|x-c\|_2
-     =\min_c\max_{1\leq i\leq m}\|v_i-c\|_2.
- \label{eq:b26-mec}
-\end{equation}
-圆盘是凸集，覆盖全部顶点即覆盖整个多边形。最小圆由一个点、两个直径端点或三个不共线点支撑，可据此构造增量算法；对小规模点集，还可枚举支撑点圆并逐一检查，作为独立验证方法。
-
-任意覆盖圆均满足 $R^*\geq D/2$。若存在半径 $D/2$ 的覆盖圆，任意一对最远顶点必为其直径端点，所以圆心只能是这对端点的中点 $c_D$。于是问题一所求判断可直接写为
-\begin{equation}
- \boxed{\text{存在同直径覆盖圆}\ \Longleftrightarrow\ 
- \max_i\|v_i-c_D\|_2\leq D/2.}
-\end{equation}
-对 $D=0$ 的单点退化情形结论仍成立。无需为这一判断完整求解最小圆，但后续单点清除应使用式~\eqref{eq:b26-mec}。
-
-平面有界集合满足 $D/2\leq R^*\leq D/\sqrt3$。上界可由支撑点论证：两点支撑时 $R^*=D/2$；三点支撑时圆心位于支撑三角形内，其最大角 $A\in[60^\circ,90^\circ]$，由正弦定理有 $R^*=a/(2\sin A)\leq D/\sqrt3$。因此，保证单点光学定位的准确判据为
-\begin{equation}
- \boxed{R^*\leq20.}\label{eq:b26-clear}
-\end{equation}
-$D\leq40$ 只是必要条件，$D\leq20\sqrt3$ 是通用充分条件，均不如直接计算最小包围圆准确。数值执行时应留出微小内缩余量，例如采用 $R^*\leq19.99$。
-
-\subsection{合成算例验证}
-采用半平面基准求解器及最小包围圆程序，得到表~\ref{tab:b26-q1}。除第一行明确由三次测向构造外，其余几何案例用于检验算法的分类和退化处理。
-\begin{table}[htbp]
- \centering
- \caption{问题一合成几何验证结果}\label{tab:b26-q1}
- \begin{tabular}{lrrc}
- \toprule
- 案例 & $D/\mathrm{m}$ & $R^*/\mathrm{m}$ & 同直径圆覆盖 \\
- \midrule
- 三次测向形成的等边三角形 & 40.0000 & 23.0940 & 否 \\
- $4\times3$ 矩形 & 5.0000 & 2.5000 & 是 \\
- 单点 & 0 & 0 & 是 \\
- 长为 $4$ 的线段 & 4.0000 & 2.0000 & 是 \\
- 矛盾约束 & \multicolumn{2}{c}{空集，直径不定义} & 不适用 \\
- 单次跨零度测向 & $+\infty$ & 无有限圆 & 不适用 \\
- \bottomrule
- \end{tabular}
-\end{table}
-另以固定随机种子 $20260910$ 生成 $200$ 组点集，将增量最小圆与枚举支撑圆的结果比较，最大半径差约为 $9.1\times10^{-13}\,\mathrm{m}$；对 $200$ 组四站合成观测逐一检验，真实目标均满足所得半平面约束。上述检验验证实现与理论的一致性；近平行边界及极端尺度仍需结合数值残差判断，不能将有限次测试当作任意浮点输入下的精确证明。
-
+\clearpage
 \section{问题二：保证接收的第二检测点选择}
+\label{sec:b26-framework-6}
+
 \subsection{首观测后的目标可行集}
-设首站为 $s$，正常示向度为 $\theta$，建立局部正交基
-\[
- u=(\cos\theta,\sin\theta)^{\mathsf T},\qquad
- v=(-\sin\theta,\cos\theta)^{\mathsf T}.
-\]
-则可能目标集合为
-\begin{equation}
- \mathcal G=\left\{s+r(\cos\delta\,u+\sin\delta\,v):
- 5<r\leq1500,\ |\delta|\leq\alpha,\ \|g\|_2\leq1800\right\}.
- \label{eq:b26-G}
-\end{equation}
-式中 $g=s+r(\cos\delta\,u+\sin\delta\,v)$。正常读数排除了 $r\leq5$；计算候选接收集合时可取 $r\geq5$ 的闭包，以保守地处理边界。
+% 在此替换占位段落；保留论证、公式、算法或结果的写作空间。
+\Bdraftspace
 
-首次接收意味着 $r\leq R$，结合半径范围可得
-\begin{equation}
- R\geq\max(1000,\|g-s\|_2).
- \label{eq:b26-Rlower}
-\end{equation}
-因此，对所有符合首观测的目标位置及半径均保证第二次接收的精确集合为
-\begin{equation}
- \mathcal C_{\mathrm{recv}}
- =\bigcap_{g\in\mathcal G}\overline B\left(g,\max(1000,\|g-s\|_2)\right).
- \label{eq:b26-receive}
-\end{equation}
-这是充要条件：属于该交集即可对全部可能状态保证接收；若不属于，则存在可能目标 $g$，取允许的最小半径 $R=\max(1000,\|g-s\|_2)$ 即得到无法接收的情形。这里的接收包括近场反馈，不保证每次都返回示向度。
+\subsection{保证接收候选区域的构造与证明}
+% 在此替换占位段落；保留论证、公式、算法或结果的写作空间。
+\Bdraftspace
 
-\subsection{四圆候选区域及解析证明}
-式~\eqref{eq:b26-receive}含有无限多个约束。先忽略目标圆域裁剪，使用完整首观测扇区，令
-\[
- e_- =\cos\alpha\,u-\sin\alpha\,v,\qquad
- e_+ =\cos\alpha\,u+\sin\alpha\,v.
-\]
-该情况下保证接收集合恰可化为四个圆盘的交集：
-\begin{equation}
- \boxed{\mathcal C_4=
- \bigcap_{\sigma\in\{-,+\}}
- \left[\overline B(s+5e_\sigma,1000)
- \cap\overline B(s+1000e_\sigma,1000)\right].}
- \label{eq:b26-C4}
-\end{equation}
-加入实际目标圆域后，$\mathcal C_4\subseteq\mathcal C_{\mathrm{recv}}$，仍然提供解析可用的保证接收候选域。目标被限制在半径 $1800$ 的圆内，并不意味着检测点必须限制在该圆内。
+\subsection{交会角、观测距离与误差传播}
+% 在此替换占位段落；保留论证、公式、算法或结果的写作空间。
+\Bdraftspace
+\Bdraftfigure{fig:b26-framework-6}
 
-写 $q-s=au+bv$。式~\eqref{eq:b26-C4}中以 $s+1000e_\pm$ 为圆心的两个约束合并为
-\begin{equation}
- a^2+b^2\leq2000\bigl(a\cos\alpha-|b|\sin\alpha\bigr).
- \label{eq:b26-fourineq}
-\end{equation}
-若 $q\neq s$，该不等式蕴含 $a>0$ 及
-$a\cos\alpha-|b|\sin\alpha>0$。因而对 $|\delta|\leq\alpha$，函数
-$a\cos\delta+b\sin\delta$ 的最小值在区间端点取得。对固定 $\delta$，有
-\begin{equation}
- \|q-s-re_\delta\|_2^2
- =a^2+b^2+r^2-2r(a\cos\delta+b\sin\delta),
- \label{eq:b26-distance}
-\end{equation}
-其中 $e_\delta=\cos\delta\,u+\sin\delta\,v$。
+\clearpage
 
-当 $5\leq r\leq1000$ 时，式~\eqref{eq:b26-distance}关于 $r$ 为凸函数，最大值只需在 $r=5,1000$ 检验；对这两个端点，最坏角度只需检验 $\delta=\pm\alpha$。这正好对应式~\eqref{eq:b26-C4}的四个圆盘。
+\subsection{候选点生成与时间代价评分}
+% 在此替换占位段落；保留论证、公式、算法或结果的写作空间。
+\Bdraftspace
 
-当 $1000\leq r\leq1500$ 时，由式~\eqref{eq:b26-Rlower}，只需保证距离不超过 $r$，等价于
-\[
- a^2+b^2\leq2r(a\cos\delta+b\sin\delta).
-\]
-右侧的括号为正，随 $r$ 增大约束变松，故 $r=1000$ 的约束已覆盖这一整段。$q=s$ 的情形直接满足接收条件。反向必要性由径向和角向端点约束及连续性得到，从而完成完整扇区下的四圆等价证明。
+\subsection{第二次反馈后的区域更新与决策}
+% 在此替换占位段落；保留论证、公式、算法或结果的写作空间。
+\Bdraftspace
 
-\begin{figure}[htbp]
- \centering
- \begin{tikzpicture}[x=0.005cm,y=0.005cm]
-  \begin{scope}
-   \clip (4.99924,0.087262) circle[radius=1000];
-   \clip (4.99924,-0.087262) circle[radius=1000];
-   \clip (999.8477,17.4524) circle[radius=1000];
-   \clip (999.8477,-17.4524) circle[radius=1000];
-   \fill[blue!12] (-60,-1050) rectangle (1100,1050);
-   \foreach \xx/\yy in {4.99924/0.087262,4.99924/-0.087262,999.8477/17.4524,999.8477/-17.4524}
-    {\draw[blue!60!black] (\xx,\yy) circle[radius=1000];}
-  \end{scope}
-  \draw[->] (-120,0)--(1350,0) node[right] {$a/\mathrm{m}$};
-  \draw[->] (0,-1000)--(0,1030) node[above] {$b/\mathrm{m}$};
-  \foreach \x in {500,1000}{\draw (\x,15)--(\x,-15) node[below] {$\x$};}
-  \foreach \y in {-750,750}{\draw (15,\y)--(-15,\y) node[left] {$\y$};}
-  \fill (0,0) circle[radius=9] node[below left] {$s$};
-  \draw[dashed,red!70!black] (0,0)--(750,600);
-  \fill[red!80!black] (750,600) circle[radius=12] node[above right] {$(750,600)$};
-  \fill[red!80!black] (750,-600) circle[radius=12] node[below right] {$(750,-600)$};
-  \node at (500,230) {$\mathcal C_4$};
- \end{tikzpicture}
- \caption{首站局部坐标下的四圆保证接收区域，图取理论误差 $1^\circ$；标出一对可行示例点}
- \label{fig:b26-lens}
-\end{figure}
+\subsection{选点方案对比与结果分析}
+% 在此替换占位段落；保留论证、公式、算法或结果的写作空间。
+\Bdraftspace
 
-\subsection{交会角对定位误差的影响}
-设真实源到两站的距离为 $r_1,r_2$，两条视线单位向量为 $e_1,e_2$，夹角为 $\phi$。以 $n_1,n_2$ 表示对应单位法向量，小角误差下位置扰动满足近似关系
-\begin{equation}
- N\Delta g=\eta,\qquad
- N=\begin{pmatrix}n_1^{\mathsf T}\\ n_2^{\mathsf T}\end{pmatrix},\qquad
- |\eta_i|\lesssim r_i\alpha,\qquad |\det N|=|\sin\phi|.
- \label{eq:b26-angle}
-\end{equation}
-当交会角接近 $0^\circ$ 或 $180^\circ$ 时，误差放大显著；较接近正交的交会通常更稳定。同时，离源越远，同样角误差对应的横向位置不确定性越大。因此，选点应同时关注交会角与第二站到可能目标的距离。
+\clearpage
+\section{问题三：全向干扰源的搜索、定位与清除}
+\label{sec:b26-framework-7}
 
-若目标恰在 $s+du$，取 $q=s+du+bv$ 可得到正交交会。但首观测并不知道 $d$，固定点不可能对整段可能距离都实现正交。本文据此在首方向两侧生成离轴候选，再用后验区域评价其表现，而不直接将某个固定三角形布局称为最优。
+\subsection{任务建模与总时间目标}
+% 在此替换占位段落；保留论证、公式、算法或结果的写作空间。
+\Bdraftspace
 
-\subsection{有限候选与稳健评分}
-首先在 $\mathcal C_4$ 内生成候选点，并施加设计移动预算 $\|q-s\|_2\leq L$，排除 $q=s$ 及横向基线过小的点。$L$ 是选点策略参数，不是题面限定。对一个假想目标 $g\in\mathcal G$ 及第二次角误差 $\varepsilon\in[-\alpha,\alpha]$，构造第二观测，并与首观测交会。
+\subsection{全域搜索覆盖与未知频道发现}
+% 在此替换占位段落；保留论证、公式、算法或结果的写作空间。
+\Bdraftspace
 
-为了利用实际可用的先验，后验评价对象取
-\begin{equation}
- K(q,g,\varepsilon)=W_1\cap W_2(q,g,\varepsilon)
- \cap\overline B(0,1800)\cap\overline B(s,1500)\cap\overline B(q,1500).
- \label{eq:b26-K}
-\end{equation}
-该集合可能具有圆弧边界，区别于问题一只含角约束的多边形 $P$。实现中使用圆的外接多边形，得到 $K\subseteq\widehat K$，再计算 $\widehat K$ 的最小包围圆半径。具体以 $64$ 边外接多边形表示目标圆域，以 $32$ 个切向半平面表示每个距离圆；所有近似均向外，避免把可能的真实目标错误排除。
+\subsection{有界误差定位与自适应测向}
+% 在此替换占位段落；保留论证、公式、算法或结果的写作空间。
+\Bdraftspace
+\Bdraftfigure{fig:b26-framework-7}
 
-连续稳健目标可定义为
-\begin{equation}
- J(q)=\sup_{\substack{g\in\mathcal G\\|\varepsilon|\leq\alpha}}
- R^*\bigl(K(q,g,\varepsilon)\bigr).
-\end{equation}
-实际算法在有限场景集 $\mathcal S$ 上计算
-\begin{equation}
- \widehat J(q)=\max_{(g,\varepsilon)\in\mathcal S}
- R^*\bigl(\widehat K(q,g,\varepsilon)\bigr).
- \label{eq:b26-score}
-\end{equation}
-若第二次反馈为近场，则该场景按半径 $5\,\mathrm{m}$ 的已知邻域计分，并直接清除。虽然每个已采样场景使用保守外近似，有限场景最大值仍不是连续 $J(q)$ 的已证明上界。
+\clearpage
 
-比较 $(\|q-s\|_2,\widehat J(q))$ 得到移动距离与定位精度的 Pareto 前沿。具体决策可采用：在 $\widehat J(q)\leq\tau$ 的候选中选最短移动点；若没有候选达到阈值，则选评分最小者。本文数值示例采用另一公开规则，即给定 $L=1000\,\mathrm{m}$，在该预算内先最小化 $\widehat J$，再以移动距离打破并列。全过程如下。
+\subsection{扫描点选择与多目标路径规划}
+% 在此替换占位段落；保留论证、公式、算法或结果的写作空间。
+\Bdraftspace
+
+\subsection{清除策略、异常处理与停止条件}
+% 在此替换占位段落；保留论证、公式、算法或结果的写作空间。
+\Bdraftspace
+
+\subsection{算法流程、复杂度与模拟结果}
+% 在此替换占位段落；保留论证、公式、算法或结果的写作空间。
+\Bdraftspace
+
+\clearpage
+\section{问题四：混合干扰源的稳健搜索与清除}
+\label{sec:b26-framework-8}
+
+\subsection{定向信号模型与无信号反馈分析}
+% 在此替换占位段落；保留论证、公式、算法或结果的写作空间。
+\Bdraftspace
+
+\subsection{定向盲区与全域覆盖设计}
+% 在此替换占位段落；保留论证、公式、算法或结果的写作空间。
+\Bdraftspace
+
+\subsection{全向源与定向源的统一状态更新}
+% 在此替换占位段落；保留论证、公式、算法或结果的写作空间。
+\Bdraftspace
+\Bdraftfigure{fig:b26-framework-8}
+
+\clearpage
+
+\subsection{测向选点与多目标调度策略}
+% 在此替换占位段落；保留论证、公式、算法或结果的写作空间。
+\Bdraftspace
+
+\subsection{完整性保证与异常兜底}
+% 在此替换占位段落；保留论证、公式、算法或结果的写作空间。
+\Bdraftspace
+
+\subsection{算法流程、复杂度与模拟结果}
+% 在此替换占位段落；保留论证、公式、算法或结果的写作空间。
+\Bdraftspace
+
+\clearpage
+\section{模型检验与结果分析}
+\label{sec:b26-framework-9}
+
+\subsection{模拟环境、案例构造与评价指标}
+% 在此替换占位段落；保留论证、公式、算法或结果的写作空间。
+\Bdraftspace
+
+\subsection{定位误差与覆盖完整性检验}
+% 在此替换占位段落；保留论证、公式、算法或结果的写作空间。
+\Bdraftspace
+
+\subsection{算法对比与消融实验}
+% 在此替换占位段落；保留论证、公式、算法或结果的写作空间。
+\Bdraftspace
+\Bdrafttable{tab:b26-framework-validation-2}
+
+\clearpage
+
+\subsection{移动、测向、切频与清除耗时分解}
+% 在此替换占位段落；保留论证、公式、算法或结果的写作空间。
+\Bdraftspace
+
+\subsection{参数敏感性与极端情形分析}
+% 在此替换占位段落；保留论证、公式、算法或结果的写作空间。
+\Bdraftspace
+
+\subsection{结果汇总与可复现性说明}
+% 在此替换占位段落；保留论证、公式、算法或结果的写作空间。
+\Bdraftspace
+\Bdrafttable{tab:b26-framework-validation-5}
+
+\clearpage
+\section{模型评价与推广}
+\label{sec:b26-framework-10}
+
+\subsection{模型与算法的优点}
+% 在此替换占位段落；保留论证、公式、算法或结果的写作空间。
+\Bdraftspace
+
+\subsection{模型局限与改进方向}
+% 在此替换占位段落；保留论证、公式、算法或结果的写作空间。
+\Bdraftspace
+
+\subsection{实际应用与推广条件}
+% 在此替换占位段落；保留论证、公式、算法或结果的写作空间。
+\Bdraftspace
+
+\clearpage
+\section{结论}
+\label{sec:b26-framework-11}
+
+\subsection{主要结论}
+% 在此替换占位段落；保留论证、公式、算法或结果的写作空间。
+\Bdraftspace
+
+\subsection{后续研究方向}
+% 在此替换占位段落；保留论证、公式、算法或结果的写作空间。
+\Bdraftspace
+
+\clearpage
+\section*{参考文献}
+% Replace each numbered placeholder with a real, verified bibliographic entry.
 \begin{enumerate}
- \item 由首站和读数计算局部基、可能目标集合及四圆候选域。
- \item 生成有限离轴候选，按四圆约束、步长及横向阈值筛选。
- \item 对每个候选枚举假想目标和角误差场景，更新后验集合并计算其最小包围圆。
- \item 比较最坏采样半径与移动时间，按公开的预算或阈值选定下一站。
- \item 获得真实第二次反馈后重新更新区域；是否清除依据真实后验半径及接口结果决定。
+\item 我爱北京航空航天大学
+\item 我爱北京航空航天大学
+\item 我爱北京航空航天大学
+\item 我爱北京航空航天大学
+\item 我爱北京航空航天大学
 \end{enumerate}
-若候选数为 $M$、场景数为 $H$，主要评分开销为 $MH$ 次后验几何更新及最小圆计算。该计算属于现实程序开销，不计入式~\eqref{eq:b26-time}的虚拟移动和动作时间。
-
-\subsection{候选点比较与数值结果}
-取合成示例 $s=(0,0)$、$\theta=0^\circ$，使用实现误差界 $1.005^\circ$。候选网格为
-\[
- a\in\{250,400,550,700,850\},\qquad
- b\in\{150,300,450,600,750\},
-\]
-筛去不满足接收约束者，加入解析可行点 $(750,600)$；另加入 $(500,0)$ 作为沿线退化对照，后者不参加正常离轴点选择。设横向阈值为 $100\,\mathrm{m}$，移动预算为 $1000\,\mathrm{m}$。评分使用 $18$ 个距离节点，包括 $5.001$、$1000$ 及 $1500$ 米附近边界，首角偏差和第二测向误差分别取 $\{-1^\circ,0^\circ,1^\circ\}$，每候选共 $162$ 个设计场景。
-
-保持同一频道时，从首站到第二站的移动加检测时间为
-\begin{equation}
- t_2(q)=\frac{\sqrt{a^2+b^2}}5+5.
- \label{eq:b26-cost2}
-\end{equation}
-表~\ref{tab:b26-q2}列出具有代表性的候选结果。均值是指定采样节点上的等权统计，不是题目环境的概率期望。
-\begin{table}[htbp]
- \centering
- \caption{问题二合成示例中的部分候选点比较}\label{tab:b26-q2}
- \small
- \begin{tabular}{crrrr}
- \toprule
- $(a,b)/\mathrm{m}$ & 移动距离/米 & $t_2$/秒 & 最坏采样半径/米 & 平均采样半径/米 \\
- \midrule
- $(500,0)$（对照） & 500.00 & 105.00 & 500.19 & 341.41 \\
- $(250,150)$ & 291.55 & 63.31 & 251.28 & 95.07 \\
- $(400,300)$ & 500.00 & 105.00 & 136.68 & 46.64 \\
- $(550,450)$ & 710.63 & 147.13 & 87.89 & 31.99 \\
- $(550,600)$ & 813.94 & 167.79 & 74.10 & 29.51 \\
- $(700,600)$ & 921.95 & 189.39 & 63.04 & 27.18 \\
- $(750,600)$ & 960.47 & 197.09 & 59.63 & 26.75 \\
- $(850,450)$ & 961.77 & 197.35 & 60.55 & 27.75 \\
- \bottomrule
- \end{tabular}
-\end{table}
-在相同 $500\,\mathrm{m}$ 基线预算下，$(400,300)$ 的最坏采样半径显著小于沿线点 $(500,0)$，说明离轴交会能够有效压缩距离不确定性。按本例的预算优先规则，选中
-\begin{equation}
- q^*=s+750u+600v,
-\end{equation}
-其最坏采样半径约 $59.631950\,\mathrm{m}$，移动加检测约 $197.093727\,\mathrm{s}$。该点优于本次枚举的其他合格候选，但不代表连续候选区域内的全局最优。
-
-对选中点再采用 $63$ 个距离节点以及 $5\times5$ 组角偏差和误差组合复核，最坏采样半径仍为 $59.631950\,\mathrm{m}$。对全部候选进行 $301$ 个径向节点乘 $41$ 个角节点的接收检验，最大距离违反量为 $-26.484947\,\mathrm{m}$，均满足约束。对 $(550,450)$ 与其镜像点进行比较，最坏采样半径差约 $2.13\times10^{-13}\,\mathrm{m}$。接收可靠性由四圆解析证明保证，密集采样仅提供数值复核。
-
-上述点的最坏采样半径仍大于 $20\,\mathrm{m}$，所以两次测向不能据此保证单点清除。第二问所得是一个可执行且保证接收的下一站策略，而非“两站必然精确定位”的结论。实际任务若更重视移动时间，可按时间预算或精度阈值选择较短基线点；其全任务收益应在后续搜索清除实验中比较。
-
-\subsection{真实第二次反馈后的决策}
-\begin{enumerate}
- \item 返回正常示向度：根据真实读数更新后验区域。若最小包围圆半径满足式~\eqref{eq:b26-clear}，前往其圆心清除；否则保留后验区域，交由后续测向或有限光学搜索继续处理。
- \item 返回近场：已知目标距当前站不超过 $5\,\mathrm{m}$，直接执行光学定位和清除，不再请求无意义的示向度。
- \item 返回无信号：在目标状态不变、全向且严格满足四圆条件的假设下，这与接收保证矛盾，应检查频道、源状态、数值边界及接口反馈。若主动选择四圆之外的探索点，则不能再宣称保证接收。
-\end{enumerate}
-如果首次观测与全局先验已经把目标约束在一个半径不超过 $20\,\mathrm{m}$ 的圆内，则无需机械执行第二次测向，可直接清除。一般首站可通过平移旋转构造四圆候选域，但全局目标圆心保持在原点，因此候选评分应按实际首站重算，不能将本例数值不加调整地移植到全部位置。
-
+\vspace{2cm}
+\clearpage
+\section*{附录与支撑材料}
+\subsection*{附录 A：问题一、二的补充推导}
+\Bdraftspace
+\subsection*{附录 B：问题三、四的算法与程序说明}
+\Bdraftspace
+\subsection*{附录 C：测试案例、结果数据与复现步骤}
+\Bdraftspace
+\clearpage
+\section*{AI 工具使用详情}
+\subsection*{工具信息与使用范围}
+\Bdraftspace
+\subsection*{主要提示、使用过程与采纳内容}
+\Bdraftspace
+\subsection*{人工修改、结果核验与责任说明}
+\Bdraftspace
 \clearpage
 \endgroup
 % ===== END B26 NEW MANUSCRIPT =====

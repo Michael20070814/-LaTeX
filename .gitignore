@@ -1,0 +1,37 @@
+# Local research and experiment materials (this is a paper-only repository).
+/reference/
+/scripts/
+/results/
+
+# LaTeX intermediate files; keep the final PDF and source figures.
+*.aux
+*.log
+*.out
+*.toc
+*.lof
+*.lot
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.xdv
+*.nav
+*.snm
+*.vrb
+*.bbl
+*.blg
+
+# Generated PNG previews; existing tracked manuscript images remain tracked.
+/image/*.png
+
+# Local environments, caches, and editor files.
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.DS_Store
+*~
+*.swp
+*.swo
+.env
+.env.*
+!.env.example

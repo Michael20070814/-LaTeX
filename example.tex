@@ -279,14 +279,21 @@ $B$ & 测试案例数量，不与目标数或扫描站数混用\\
 对于位置 $s_i=(x_i,y_i)^{\mathsf T}$ 处的正常示向度 $\theta_i$，定义边界方向
 \begin{equation}
  u_i^- =\begin{pmatrix}\cos(\theta_i-\alpha)\\ \sin(\theta_i-\alpha)\end{pmatrix},\qquad
- u_i^+ =\begin{pmatrix}\cos(\theta_i+\alpha)\\ \sin(\theta_i+\alpha)\end{pmatrix},
+ u_i^+ =\begin{pmatrix}\cos(\theta_i+\alpha)\\ \sin(\theta_i+\alpha)\end{pmatrix}
 \end{equation}
 其闭角域为
 \begin{equation}
- W_i=\{x:u_i^-\times(x-s_i)\geq0,\quad u_i^+\times(x-s_i)\leq0\},
+ W_i=\{x:u_i^-\times(x-s_i)\geq0,\quad u_i^+\times(x-s_i)\leq0\}
  \label{eq:b26-wedge}
 \end{equation}
-两条有向约束同时成立，才能保留向前张开的角域并排除反向区域。三角函数表示还能自然处理 $0^\circ$ 与 $360^\circ$ 附近的跨界读数。
+如图所示当两条有向约束同时成立，才能保证二维点在向前张开的角域约束范围内。
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=.6\textwidth]{image/draw_wedge_constraint.png}
+    \caption{角域约束条件示意图}
+    \label{fig:circuit-diagram}
+\end{figure}
 
 将式~\eqref{eq:b26-wedge}写成矩阵形式，有
 \begin{equation}
@@ -300,7 +307,77 @@ $B$ & 测试案例数量，不与目标数或扫描站数混用\\
  P=\bigcap_{i=1}^nW_i=\{x:Ax\leq b\},
  \label{eq:b26-region}
 \end{equation}
-该定义按交会几何取闭包，不额外挖去检测点周围的 $5\,\mathrm{m}$ 圆盘。若加入近场排除信息，集合可能不再是凸多边形，需另行处理。
+
+对于第一问的求解，先将近场情况下对于周围 $5\,\mathrm{m}$范围无法测得示向度的问题留待之后进行详细讨论。本问只考虑按交会几何取闭包。集合为凸多边形的情形。
+
+\subsection{直径由最远顶点对取得的证明}
+非空有界多边形的任意两点可写为顶点的凸组合：
+\[
+ x=\sum_i\lambda_i v_i,\qquad y=\sum_j\mu_j v_j,\qquad
+ \lambda_i,\mu_j\geq0,\quad \sum_i\lambda_i=\sum_j\mu_j=1
+\]
+利用三角不等式，有
+\begin{align}
+ \|x-y\|_2
+ &=\left\|\sum_{i,j}\lambda_i\mu_j(v_i-v_j)\right\|_2\notag\\
+ &\leq\sum_{i,j}\lambda_i\mu_j\|v_i-v_j\|_2
+ \leq\max_{i,j}\|v_i-v_j\|_2
+\end{align}
+由于顶点本身属于 $P$，上界可以达到，故
+\begin{equation}
+ D(P)=\max_{1\leq i,j\leq m}\|v_i-v_j\|_2
+\label{eq:b26-diameter}
+\end{equation}
+
+该结论对线段与单点同样成立，单点直径为零。
+
+\subsection{同直径圆不能总是覆盖定位区域}
+构造等边三角形
+\[
+ V_1=(0,0),\qquad V_2=(40,0),\qquad V_3=(20,20\sqrt3),
+\]
+其区域直径为 $D=40$。为说明该反例确实能够由题设观测产生，而非任意假设一个多边形，取
+\begin{equation}
+ \begin{aligned}
+ S_1&=(-1200,0),            &\theta_1&=1^\circ,\\
+ S_2&=(640,-600\sqrt3),    &\theta_2&=121^\circ,\\
+ S_3&=(620,620\sqrt3),     &\theta_3&=241^\circ,
+ \end{aligned}
+ \label{eq:b26-counterexample}
+\end{equation}
+每个检测点位于一条三角形边的反向延长线上，其示向度比该边的正向角大 $1^\circ$。因此各观测角域的一条边恰为三角形的支持直线，另一条边对三个顶点不活跃。各顶点相对相应边方向的偏角为 $0^\circ$ 或约 $1.626435^\circ$，落在 $[0^\circ,2^\circ]$ 内，三个角域的交集恰为该等边三角形。检测点到三角形顶点的距离不超过 $1240\,\mathrm{m}$；以重心为真实源并取有效半径 $1500\,\mathrm{m}$，可得到满足题目条件的观测。
+
+设三角形重心为 $g_0$，任意候选圆心为 $c$，则
+\begin{equation}
+ \sum_{i=1}^3\|V_i-c\|_2^2
+ =\sum_{i=1}^3\|V_i-g_0\|_2^2+3\|g_0-c\|_2^2
+ =D^2+3\|g_0-c\|_2^2\geq D^2
+\end{equation}
+故至少一个顶点到 $c$ 的距离不小于 $D/\sqrt3$；取 $c=g_0$ 达到等号。因此该区域的最小包围圆半径为
+\begin{equation}
+ R^*=\frac{40}{\sqrt3}\approx23.0940>\frac D2=20
+\end{equation}
+这证明不存在任何直径为 $40\,\mathrm{m}$ 的圆能够覆盖该定位区域。
+
+\begin{figure}[htbp]
+ \centering
+ \begin{tikzpicture}[scale=0.85]
+  \fill[blue!7] (0,0)--(4,0)--(2,3.4641)--cycle;
+  \draw[blue!65!black,thick] (2,1.1547) circle (2.3094);
+  \draw[red!75!black,dashed,thick] (2,0) circle (2);
+  \draw[thick] (0,0)--(4,0)--(2,3.4641)--cycle;
+  \fill (0,0) circle (2pt) node[below left] {$V_1$};
+  \fill (4,0) circle (2pt) node[below right] {$V_2$};
+  \fill (2,3.4641) circle (2pt) node[above] {$V_3$};
+  \fill[blue!65!black] (2,1.1547) circle (2pt) node[right] {$c^*$};
+  \draw[blue!65!black] (2,1.1547)--(4,0);
+  \node at (2,-0.4) {$D=40$};
+  \node[anchor=west,align=left] at (5,2.5) {实线：最小包围圆\\$R^*=40/\sqrt3$};
+  \node[anchor=west,align=left] at (5,0.8) {虚线：最长边的直径圆\\半径为 $20$，不能覆盖 $V_3$};
+ \end{tikzpicture}
+ \caption{可由三次有界误差测向形成的等边三角形反例，长度单位为米}
+ \label{fig:b26-triangle}
+\end{figure}
 
 \subsection{区域分类与顶点求解算法}
 本节仅使用交会测向的角度约束，不加入近场、接收距离或目标圆域。输入为式~\eqref{eq:b26-region}中的 $A\in\mathbb R^{N_c\times2}$ 和 $b\in\mathbb R^{N_c}$，其中 $N_c=2n$，$n$ 为该源实际获得的有效测向次数。输出包括区域类别、按逆时针排列的顶点、最远点对及直径；非空有界时还输出最小包围圆。第一问本身并未给出 $n\leq8$ 的限制，后续主动定位的轮数也不等于所有扫描中累计的观测次数。
@@ -467,25 +544,7 @@ $\varepsilon_k(z)=\varepsilon_{\rm abs}+
 \end{table}
 排序算法相对逐对枚举减少了候选边界交点的生成量；混合流程则付出额外审计成本，换取可复核的完整性证据。对同一组理想输入，各正确算法应给出相同区域、直径和覆盖圆，不存在单靠更换求交算法就提高几何定位精度的结论。小规模输入是否更快须由配对计时决定；当前没有新增混合实现的计时结果，因此不填写未经运行的加速倍数。选择该流程的依据是规模扩展能力、边界分类与输出证据的完整性。
 
-\subsection{直径由最远顶点对取得的证明}
-非空有界多边形的任意两点可写为顶点的凸组合：
-\[
- x=\sum_i\lambda_i v_i,\qquad y=\sum_j\mu_j v_j,\qquad
- \lambda_i,\mu_j\geq0,\quad \sum_i\lambda_i=\sum_j\mu_j=1
-\]
-利用三角不等式，有
-\begin{align}
- \|x-y\|_2
- &=\left\|\sum_{i,j}\lambda_i\mu_j(v_i-v_j)\right\|_2\notag\\
- &\leq\sum_{i,j}\lambda_i\mu_j\|v_i-v_j\|_2
- \leq\max_{i,j}\|v_i-v_j\|_2
-\end{align}
-由于顶点本身属于 $P$，上界可以达到，故
-\begin{equation}
- \boxed{D(P)=\max_{1\leq i,j\leq m}\|v_i-v_j\|_2}
- \label{eq:b26-diameter}
-\end{equation}
-该结论对线段与单点同样成立，单点直径为零。
+
 
 \subsubsection{旋转卡壳如何得到最远顶点对}
 上述结论把连续区域上的最大化转化为有限顶点对问题。直接检查全部 $m(m-1)/2$ 对是独立基准；为了避免大规模时反复比较，主求解步骤可利用凸包顶点已经逆时针有序的性质。
@@ -518,53 +577,6 @@ $\varepsilon_k(z)=\varepsilon_{\rm abs}+
 \caption{旋转卡壳的支持线、指针及并列处理（图位，待绘制）}\label{fig:q1-calipers-detail}
 \end{figure}
 
-\subsection{同直径圆不能总是覆盖定位区域}
-构造等边三角形
-\[
- V_1=(0,0),\qquad V_2=(40,0),\qquad V_3=(20,20\sqrt3),
-\]
-其区域直径为 $D=40$。为说明该反例确实能够由题设观测产生，而非任意假设一个多边形，取
-\begin{equation}
- \begin{aligned}
- S_1&=(-1200,0),            &\theta_1&=1^\circ,\\
- S_2&=(640,-600\sqrt3),    &\theta_2&=121^\circ,\\
- S_3&=(620,620\sqrt3),     &\theta_3&=241^\circ,
- \end{aligned}
- \label{eq:b26-counterexample}
-\end{equation}
-每个检测点位于一条三角形边的反向延长线上，其示向度比该边的正向角大 $1^\circ$。因此各观测角域的一条边恰为三角形的支持直线，另一条边对三个顶点不活跃。各顶点相对相应边方向的偏角为 $0^\circ$ 或约 $1.626435^\circ$，落在 $[0^\circ,2^\circ]$ 内，三个角域的交集恰为该等边三角形。检测点到三角形顶点的距离不超过 $1240\,\mathrm{m}$；以重心为真实源并取有效半径 $1500\,\mathrm{m}$，可得到满足题目条件的观测。
-
-设三角形重心为 $g_0$，任意候选圆心为 $c$，则
-\begin{equation}
- \sum_{i=1}^3\|V_i-c\|_2^2
- =\sum_{i=1}^3\|V_i-g_0\|_2^2+3\|g_0-c\|_2^2
- =D^2+3\|g_0-c\|_2^2\geq D^2
-\end{equation}
-故至少一个顶点到 $c$ 的距离不小于 $D/\sqrt3$；取 $c=g_0$ 达到等号。因此该区域的最小包围圆半径为
-\begin{equation}
- R^*=\frac{40}{\sqrt3}\approx23.0940>\frac D2=20
-\end{equation}
-这证明不存在任何直径为 $40\,\mathrm{m}$ 的圆能够覆盖该定位区域。
-
-\begin{figure}[htbp]
- \centering
- \begin{tikzpicture}[scale=0.85]
-  \fill[blue!7] (0,0)--(4,0)--(2,3.4641)--cycle;
-  \draw[blue!65!black,thick] (2,1.1547) circle (2.3094);
-  \draw[red!75!black,dashed,thick] (2,0) circle (2);
-  \draw[thick] (0,0)--(4,0)--(2,3.4641)--cycle;
-  \fill (0,0) circle (2pt) node[below left] {$V_1$};
-  \fill (4,0) circle (2pt) node[below right] {$V_2$};
-  \fill (2,3.4641) circle (2pt) node[above] {$V_3$};
-  \fill[blue!65!black] (2,1.1547) circle (2pt) node[right] {$c^*$};
-  \draw[blue!65!black] (2,1.1547)--(4,0);
-  \node at (2,-0.4) {$D=40$};
-  \node[anchor=west,align=left] at (5,2.5) {实线：最小包围圆\\$R^*=40/\sqrt3$};
-  \node[anchor=west,align=left] at (5,0.8) {虚线：最长边的直径圆\\半径为 $20$，不能覆盖 $V_3$};
- \end{tikzpicture}
- \caption{可由三次有界误差测向形成的等边三角形反例，长度单位为米}
- \label{fig:b26-triangle}
-\end{figure}
 
 \subsection{覆盖判定与光学清除准则}
 定义最小包围圆问题

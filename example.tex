@@ -145,7 +145,7 @@ $16$ 个干扰源，平均定位清除时间依次为 $225.40$、$184.08$、$199
 本文主要符号见表~\ref{tab:notation}。仅在某一算法步骤中使用的辅助变量在相应位置定义。
 
 记 $\overline B(c,r)=\{x:\|x-c\|_2\leq r\}$，$\operatorname{conv}$ 表示凸包，$V(Q)$ 表示多边形顶点集，$a\times b=a_xb_y-a_yb_x$，频道全集为 $\mathcal C=\{1,\ldots,20\}$。涉及微分及小角近似时，将角度换为弧度；计算几何方向时采用向量表示，以统一处理示向度跨越 $0^\circ$ 的情形。
-\begin{table}[H]
+\begin{table}[htbp]
 \centering
 \caption{主要符号及含义}\label{tab:notation}
 \begin{tabularx}{\linewidth}{p{2.0cm}X>{\centering\arraybackslash}p{2.0cm}}
@@ -184,7 +184,7 @@ $N,C,\eta,\tau$ & 实际源数、清除数、清除比例、每源平均时间 &
  \label{eq:b26-wedge}
 \end{equation}
 两条有向约束同时成立，才能保证二维点位于向前张开的角域内，如图~\ref{fig:q1-wedge-constraint}所示。
-\begin{figure}[H]
+\begin{figure}[htbp]
  \centering\includegraphics[width=0.60\linewidth]{image/draw_wedge_constraint.png}
  \caption{角域约束条件示意图}\label{fig:q1-wedge-constraint}
 \end{figure}
@@ -202,7 +202,7 @@ $N,C,\eta,\tau$ & 实际源数、清除数、清除比例、每源平均时间 &
  \label{eq:b26-P}
 \end{equation}
 半平面是凸集，因此 $P$ 具有凸性，但未必有界或具有非零面积。图~\ref{fig:q1-geometry}展示了误差角域与交会区域的关系。此处不额外加入目标圆域或接收距离，以保持所计算对象与题目中的多边形定位区域一致。近场范围内无法测得示向度的情形在后续定位清除中处理，本问按交会几何取闭包。
-\begin{figure}[H]
+\begin{figure}[htbp]
  \centering\includegraphics[width=0.94\linewidth]{image/q1_geometry.pdf}
  \caption{有界测向误差形成的角域及交会定位区域示意}\label{fig:q1-geometry}
 \end{figure}
@@ -295,7 +295,7 @@ $x=\sum_i\lambda_i v_i$、$y=\sum_j\mu_jv_j$，其中系数非负且各自和为
  =40^2+3\|g_0-c\|_2^2\geq40^2
 \end{equation}
 因此至少一个顶点到圆心的距离不小于 $40/\sqrt3$；取 $c=g_0$ 可达到该下界。最小包围圆半径为 $23.0940\,\mathrm m>20\,\mathrm m$，不存在直径为 $40\,\mathrm m$ 的覆盖圆，如图~\ref{fig:b26-triangle}所示。
-\begin{figure}[H]
+\begin{figure}[htbp]
  \centering\includegraphics[width=0.60\linewidth]{image/q1_triangle_counterexample.pdf}
  \caption{三次测向形成的等边三角形及其最小包围圆}\label{fig:b26-triangle}
 \end{figure}
@@ -330,7 +330,7 @@ $x=\sum_i\lambda_i v_i$、$y=\sum_j\mu_jv_j$，其中系数非负且各自和为
 利用合成几何案例检查区域分类、直径计算与圆覆盖判断，结果如表~\ref{tab:b26-q1}。三角形由式~\eqref{eq:b26-counterexample}的测向数据产生，其余案例用于检查几何计算的退化分支。
 
 矩形与三角形的结果表明，同直径圆能否覆盖取决于区域形状，而不能仅由直径大小决定。进一步采用随机点集的支撑圆枚举检验最小圆结果，并对含真实目标的合成测向检查半平面约束，数值检验结果汇总于第九章。
-\begin{table}[H]
+\begin{table}[htbp]
  \centering\caption{定位区域的典型几何计算结果}\label{tab:b26-q1}
  \begin{tabular}{lrrc}
  \toprule
@@ -409,7 +409,7 @@ $x=\sum_i\lambda_i v_i$、$y=\sum_j\mu_jv_j$，其中系数非负且各自和为
 右侧括号为正，随 $r$ 增大约束变松，故 $r=1000$ 的约束已覆盖整个区间。$q=s$ 直接满足接收条件；必要性则由上述径向、角向端点及连续性得到。由此，完整扇区下的保证可接收区域与 $\mathcal C_4$ 等价。
 
 加入实际目标圆域后，可能目标减少，故 $\mathcal C_4\subseteq\mathcal C_{\mathrm{recv}}$。因此，四圆交集给出了便于计算的保证接收候选区域，其形状及一对可行点见图~\ref{fig:b26-lens}。
-\begin{figure}[H]
+\begin{figure}[htbp]
  \centering
  \includegraphics[width=0.72\textwidth]{image/q2_reception.pdf}
  \caption{首站局部坐标下的四圆保证接收区域，理论误差取 $1^\circ$，标出一对可行示例点}
@@ -476,7 +476,7 @@ $x=\sum_i\lambda_i v_i$、$y=\sum_j\mu_jv_j$，其中系数非负且各自和为
  \label{eq:b26-cost2}
 \end{equation}
 表~\ref{tab:b26-q2}给出部分代表性候选的计算结果，图~\ref{fig:b26-q2-tradeoff}展示其移动距离与最坏采样半径的关系。
-\begin{table}[H]
+\begin{table}[htbp]
  \centering
  \caption{问题二合成算例中的部分候选点比较}\label{tab:b26-q2}
  \small
@@ -495,7 +495,7 @@ $x=\sum_i\lambda_i v_i$、$y=\sum_j\mu_jv_j$，其中系数非负且各自和为
  \bottomrule
  \end{tabular}
 \end{table}
-\begin{figure}[H]
+\begin{figure}[htbp]
  \centering
  \includegraphics[width=0.85\textwidth]{image/q2_tradeoff.pdf}
  \caption{部分候选点的移动距离与最坏采样定位半径，数据对应表~\ref{tab:b26-q2}}
@@ -531,7 +531,7 @@ $x=\sum_i\lambda_i v_i$、$y=\sum_j\mu_jv_j$，其中系数非负且各自和为
 其中每次光学尝试均耗时 $3$ 秒，成功时另付 $2$ 秒激光清除时间。无信号检测同样计时，清除操作不改变测向机频道。优化首先要求全部源被清除，再尽量减小 $T$。
 
 用 $\mathcal H$ 记录已发现频道，用 $\mathcal D$ 记录成功清除频道，对每个未清除的已知源维护位置区域 $\widehat K_j$。同时用 $\mathcal U$ 记录尚未完成搜索的空间单元。策略根据这些状态交替执行区域扫描、已知源补测与光学清除，任务内部根据新反馈调整局部动作，在一次扫描或目标定位结束后重排任务路线，流程见图~\ref{fig:q3-flow}。
-\begin{figure}[H]
+\begin{figure}[htbp]
  \centering\includegraphics[width=0.75\linewidth,height=0.60\textheight,keepaspectratio]{image/2 (1).png}
  \caption{全向源的动态扫描、定位清除与终止判断流程}\label{fig:q3-flow}
 \end{figure}
@@ -554,7 +554,7 @@ $x=\sum_i\lambda_i v_i$、$y=\sum_j\mu_jv_j$，其中系数非负且各自和为
  \label{eq:b26-q3-cell-cover}
 \end{equation}
 当多边形全部顶点位于接收圆内时，凸性保证整个单元均被覆盖。因此该指标检查的是连续单元。只有某站完成全部尚未知频道的扫描后，才能将其覆盖单元从 $\mathcal U$ 中删除。图~\ref{fig:q3-coverage}给出了固定覆盖与单元表示。
-\begin{figure}[H]
+\begin{figure}[htbp]
  \centering\includegraphics[width=0.98\linewidth]{image/q3_coverage.pdf}
  \caption{七站距离覆盖及连续搜索单元示意；单元颜色表示示意扫描状态}\label{fig:q3-coverage}
 \end{figure}
@@ -679,7 +679,7 @@ $\sqrt{12.5^2+13.2^2}\approx18.18\,\mathrm m<20\,\mathrm m$，因此任意可能
 定位清除时间 $\tau=T/C$。三次测试的案例编码、清除干扰源个数与平均定位清除时间见表；
 对应的总虚拟时间依次为 $3380.96$、$2945.28$、$3187.82$ 秒。
 
-\begin{table}[H]
+\begin{table}[htbp]
 \centering
 \caption{问题 3 正式测试结果}
 \label{tab:b26-q3-official}
@@ -708,7 +708,7 @@ $225.40$ 秒/个。
 清除数），以 $\tau=T/C$ 衡量每源平均时间。跨案例同时给出逐例 $\tau$ 的算术均值与
 按目标数加权的 $\sum T/\sum C$。
 
-\begin{figure}[H]
+\begin{figure}[htbp]
  \centering\includegraphics[width=0.55\linewidth]{image/q3_trajectory.pdf}
  \caption{第三问交付程序在 $16$ 源合成案例中的实际动作轨迹:源位置由运行结束后的真值记录绘制}\label{fig:q3-trajectory}
 \end{figure}
@@ -725,7 +725,7 @@ $225.40$ 秒/个。
  n^{\mathsf T}(q-g)\leq\|q\|_2-1800\leq0.
 \end{equation}
 除与源位置重合的接触点外，圆内检测点均在背面。单纯增加圆内检测站无法解决这一边界情况，必须允许域外停靠，并同时保证距离覆盖与方向覆盖。图~\ref{fig:q4-miss}展示距离合格但方向不满足的漏检情形。
-\begin{figure}[H]
+\begin{figure}[htbp]
  \centering\includegraphics[width=0.56\linewidth]{image/q4_directional_miss.pdf}
  \caption{圆域边界朝外发射时，圆内检测站可能因方向遮挡而漏检}
  \label{fig:q4-miss}
@@ -767,7 +767,7 @@ $225.40$ 秒/个。
  \label{eq:b26-q4-cell-certificate}
 \end{equation}
 若条件暂不满足，则将该三角形沿边中点分成四个子三角形并继续检验。顶点距离约束能够保证单元整体位于各站接收圆内，凸包包含条件又保证每个源位置满足式~\eqref{eq:b26-directional-certificate}。因此，所有相关单元检验通过后，得到位置和方向均连续的覆盖保证。图~\ref{fig:q4-coverage}给出双环布局及代表性单元的近邻站关系。
-\begin{figure}[H]
+\begin{figure}[htbp]
  \centering\includegraphics[width=0.89\linewidth]{image/q4_coverage.pdf}
 \caption{混合源的双环检测布局与近邻站凸包覆盖条件}\label{fig:q4-coverage}
 \end{figure}
@@ -852,7 +852,7 @@ $225.40$ 秒/个。
 第四问同样在官方模拟器中完成三次正式测试，结果按题面表 1 的格式列于
 表~\ref{tab:b26-q4-official}。
 
-\begin{table}[H]
+\begin{table}[htbp]
 \centering
 \caption{问题 4 正式测试结果（按题面表 1 格式）}
 \label{tab:b26-q4-official}
@@ -878,7 +878,7 @@ JSH3-8CAA-UJWN-67EG & 16 & 224.04 & 0.840 \\
 与第三问相比，第四问的每源耗时约为其 $2.1$ 至 $2.2$ 倍，这与定向源在其发射背面
 形成检测盲区、需要更多检测点与更长路线相符。
 
-\begin{figure}[H]
+\begin{figure}[htbp]
  \centering\includegraphics[width=0.6\linewidth]{image/q4_trajectory.pdf}
  \caption{第四问模拟案例的实际动作轨迹；定向朝向由模拟记录绘制}\label{fig:q4-trajectory}
 \end{figure}
@@ -899,7 +899,7 @@ JSH3-8CAA-UJWN-67EG & 16 & 224.04 & 0.840 \\
 
 \subsection{有界误差场与困难场景检验}
 常规测试中，源位置按面积均匀分布于目标圆域，源数为 $10$ 至 $16$，频道从 $1$ 至 $20$ 中无放回选取，接收半径在 $1000$ 至 $1500\,\mathrm m$ 间均匀生成。第四问混合布置全向源与随机朝向的定向源。测向误差设置为平滑有界场、按 $30\,\mathrm m$ 方格固定的分片误差场、恒定 $+1^\circ$、恒定 $-1^\circ$ 和零误差五类，同一位置的重复观测保持相同误差。每类误差下各设置四个案例，以单例总耗时与清除源数之比作为每源耗时，再取组内算术平均，结果见表~\ref{tab:error-fields}。
-\begin{table}[H]
+\begin{table}[htbp]
 \centering\caption{不同误差机制下的本地合成测试汇总}\label{tab:error-fields}
 \begin{tabular}{lcrr}
 \toprule
@@ -916,7 +916,7 @@ JSH3-8CAA-UJWN-67EG & 16 & 224.04 & 0.840 \\
 五类误差机制下，所有案例均完成全部目标清除，表明算法在所测误差条件下保持了搜索与清除的有效性。第三、四问的组均每源耗时分别为 $229.14$ 至 $253.14$ 秒和 $441.14$ 至 $508.30$ 秒。各组源位置与接收半径亦有变化，组间耗时反映了误差机制与场景条件的共同作用。
 
 第四问的压力测试统一将接收半径取为 $1000\,\mathrm m$，每例仅保留一个全向源，其余为定向源。四种构造及实际耗时如表~\ref{tab:q4-stress}。
-\begin{table}[H]
+\begin{table}[htbp]
 \centering\caption{第四问最小接收半径下的四个压力案例}\label{tab:q4-stress}
 \begin{tabular}{p{6.0cm}crr}
 \toprule
@@ -935,7 +935,7 @@ JSH3-8CAA-UJWN-67EG & 16 & 224.04 & 0.840 \\
 对 $44$ 次仿真实验的 $9347$ 条动作记录进行计时核验，逐项复算移动、切频、测量、光学定位与激光清除耗时，并与模拟器记录比对。第三问常规组、第四问常规组和压力组分别清除 $257$、$257$ 和 $54$ 个源，累计清除 $568$ 个源，清除点均满足光学距离约束。三个测试组的平均每源耗时分别为 $238.77$、$480.40$ 和 $512.88$ 秒。未量化的分项时间之和与模拟器总时间的最大差值为 $5.64\times10^{-6}$ 秒，与逐步微秒量化产生的偏差一致。
 
 图~\ref{fig:performance}汇总了每源耗时分布与动作组成。第三问的耗时分布较集中，第四问的分布更为分散，压力案例呈现较长尾部。第三问常规组、第四问常规组和压力组的平均每源移动时间占比分别为 $74.28\%$、$73.68\%$ 和 $73.93\%$，移动是主要时间开销。因此，后续优化应重点协调检测点的空间覆盖、定位需求与路线长度。
-\begin{figure}[H]
+\begin{figure}[htbp]
  \centering\includegraphics[width=0.98\linewidth]{image/performance.pdf}
  \caption{仿真实验的每源耗时分布与动作组成；各分项先按单例源数归一化再取均值}\label{fig:performance}
 \end{figure}
@@ -958,7 +958,7 @@ JSH3-8CAA-UJWN-67EG & 16 & 224.04 & 0.840 \\
 
 模型以题设的静态源、固定接收条件和正常接口为前提。现场障碍、动态源和设备异常需要扩展观测与运动模型。后续改进可围绕主要移动成本研究更合适的扫描布局和局部调度，但需在保持覆盖条件的同时用独立测试验证。
 
-\newpage
+\clearpage
 
 \begin{thebibliography}{9}
 \bibitem{boyd} Boyd S, Vandenberghe L. Convex Optimization[M]. Cambridge: Cambridge University Press, 2004. \url{https://web.stanford.edu/~boyd/cvxbook/}.

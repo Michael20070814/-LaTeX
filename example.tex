@@ -139,7 +139,7 @@
 
 \section{符号说明}
 本文主要符号见表~\ref{tab:notation}。仅在某一算法步骤中使用的辅助变量在相应位置定义。
-\begin{table}[htbp]
+\begin{table}[H]
 \centering
 \caption{主要符号及含义}\label{tab:notation}
 \begin{tabularx}{\linewidth}{p{2.0cm}X>{\centering\arraybackslash}p{2.0cm}}
@@ -178,7 +178,7 @@ $N,C,\eta,\tau$ & 实际源数、清除数、清除比例、每源平均时间 &
  \label{eq:b26-wedge}
 \end{equation}
 两条有向约束同时成立，才能保证二维点位于向前张开的角域内，如图~\ref{fig:q1-wedge-constraint}所示。
-\begin{figure}[htbp]
+\begin{figure}[H]
  \centering\includegraphics[width=0.60\linewidth]{image/draw_wedge_constraint.png}
  \caption{角域约束条件示意图}\label{fig:q1-wedge-constraint}
 \end{figure}
@@ -196,10 +196,61 @@ $N,C,\eta,\tau$ & 实际源数、清除数、清除比例、每源平均时间 &
  \label{eq:b26-P}
 \end{equation}
 半平面是凸集，因此 $P$ 具有凸性，但未必有界或具有非零面积。图~\ref{fig:q1-geometry}展示了误差角域与交会区域的关系。此处不额外加入目标圆域或接收距离，以保持所计算对象与题目中的多边形定位区域一致。近场范围内无法测得示向度的情形在后续定位清除中处理，本问按交会几何取闭包。
-\begin{figure}[htbp]
+\begin{figure}[H]
  \centering\includegraphics[width=0.94\linewidth]{image/q1_geometry.pdf}
  \caption{有界测向误差形成的角域及交会定位区域示意}\label{fig:q1-geometry}
 \end{figure}
+
+\subsection{定位区域的分类与顶点求解}
+本节中采用线性规划进行可行性与有界性判别\cite{boyd}
+
+对式~\eqref{eq:b26-P}先进行可行性判断，确定区域存在。
+\begin{equation}
+ \text{find }x\quad\text{s.t. }Ax\le b.\
+\end{equation}
+
+若不存在相应x，则各次观测不能共同支持一个源位置，$P=\varnothing$，直径无法定义。
+
+若存在相应x，分别求 $x_1,-x_1,x_2,-x_2$ 在 $P$ 上的最小值：
+
+具体为
+
+设
+
+\[
+P=\{x=(x_1,x_2)^{\mathsf T}:Ax\le b\}.
+\]
+
+则有
+
+\[
+\ell_1=\min_{x}\{x_1:Ax\le b\},
+\]\[
+u_1=\max_{x}\{x_1:Ax\le b\}
+      =-\min_{x}\{-x_1:Ax\le b\},
+\]\[
+\ell_2=\min_{x}\{x_2:Ax\le b\},
+\]\[
+u_2=\max_{x}\{x_2:Ax\le b\}
+      =-\min_{x}\{-x_2:Ax\le b\}.
+\]
+
+若四个最小值都为有限数，则
+
+\[
+P\subseteq[\ell_1,u_1]\times[\ell_2,u_2],
+\]
+
+说明区域包含于有限矩形内，从而有界。反之，若其中任一问题无界，都表明存在无穷延伸方向。
+
+对有界区域，记约束总数为 $m=2n$，枚举不平行的边界对，求解
+\begin{equation}
+ \begin{pmatrix}a_k^{\mathsf T}\\a_\ell^{\mathsf T}\end{pmatrix}x
+ =\begin{pmatrix}b_k\\b_\ell\end{pmatrix},\qquad k<\ell.
+\end{equation}
+保留满足全部约束的交点，随后去除重复点并按凸包顺序排列。每个二维多面区域的顶点至少由两条独立边界确定，从而获得全部顶点。若仅剩一个点或两个端点，则分别按单点和线段的特殊情况处理。
+
+边界交点至多为 \(\frac{m(m-1)}2.\) 个，每个交点需要检查 $m$ 条约束，因此枚举筛选的最坏复杂度为 $O(m^3)$；这一方法适用于测向次数较少的本题。
 
 \subsection{定位区域直径的计算}
 设有界区域的顶点为 $v_1,\ldots,v_h$。任取 $x,y\in P$，可写为
@@ -212,10 +263,10 @@ $x=\sum_i\lambda_i v_i$、$y=\sum_j\mu_jv_j$，其中系数非负且各自和为
 \end{equation}
 由于顶点本身属于 $P$，上界可以由某个顶点对取得，故
 \begin{equation}
- \boxed{D=\max_{1\leq i,j\leq h}\|v_i-v_j\|_2.}
+ {D=\max_{1\leq i,j\leq h}\|v_i-v_j\|_2.}
  \label{eq:b26-diameter}
 \end{equation}
-算法枚举顶点对的距离平方，记录最大值对应的两个端点，最后开平方，时间复杂度为 $O(h^2)$。对单点有 $D=0$，对线段得到两端点距离；无界非空区域的直径为 $+\infty$。这些情形由后述区域分类步骤判定。
+算法枚举顶点对的距离平方，记录最大值对应的两个端点，最后开平方，时间复杂度为 $O(h^2)$。对单点有 $D=0$，对线段得到两端点距离；无界非空区域的直径为 $+\infty$。
 
 \subsection{同直径圆的覆盖问题}
 直径只约束任意两点之间的距离，并不保证存在同直径的覆盖圆。取三角形顶点
@@ -242,23 +293,6 @@ $x=\sum_i\lambda_i v_i$、$y=\sum_j\mu_jv_j$，其中系数非负且各自和为
  \centering\includegraphics[width=0.70\linewidth]{image/q1_counterexample.pdf}
  \caption{三次测向形成的等边三角形及其最小包围圆}\label{fig:b26-triangle}
 \end{figure}
-
-\subsection{定位区域的分类与顶点求解}
-对式~\eqref{eq:b26-P}先进行可行性判断。求解零目标线性规划
-\begin{equation}
- \min_x 0,\qquad\text{s.t.}\quad Ax\leq b.
-\end{equation}
-若不可行，则各次观测不能共同支持一个源位置，$P=\varnothing$，直径不定义。若可行，分别求 $x_1,-x_1,x_2,-x_2$ 在 $P$ 上的最小值；任一问题无界，都表明存在无穷延伸方向。反之，四个方向均有有限界时，区域包含于有限矩形内，从而有界。这一分类利用线性规划的可行性与有界性判别\cite{boyd}，避免人为添加大矩形后将无界区域误判为有限多边形。
-
-对有界区域，记约束总数为 $m=2n$，枚举不平行的边界对，求解
-\begin{equation}
- \begin{pmatrix}a_k^{\mathsf T}\\a_\ell^{\mathsf T}\end{pmatrix}x
- =\begin{pmatrix}b_k\\b_\ell\end{pmatrix},\qquad k<\ell.
-\end{equation}
-只有满足全部约束的交点才被保留，随后去除重复点并按凸包顺序排列。每个二维多面区域的顶点至少由两条独立边界确定，故该步骤能够获得全部顶点。若仅剩一个点或两个端点，分别按单点和线段处理。
-
-边界交点至多为 $\binom m2$ 个，每个交点需要检查 $m$ 条约束，因此枚举筛选的最坏复杂度为 $O(m^3)$；这一方法适用于测向次数较少的本题。计算前对约束法向量及坐标尺度归一化，平行性判断和约束残差采用数值容差；求解失败与空集状态分别处理，避免将数值故障当作几何结论。
-
 \subsection{最小包围圆与光学清除判据}
 一般情况下，最小包围圆问题写为
 \begin{equation}

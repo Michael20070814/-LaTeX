@@ -269,7 +269,7 @@ $x=\sum_i\lambda_i v_i$、$y=\sum_j\mu_jv_j$，其中系数非负且各自和为
 算法枚举顶点对的距离平方，记录最大值对应的两个端点，最后开平方，时间复杂度为 $O(h^2)$。对单点有 $D=0$，对线段得到两端点距离；无界非空区域的直径为 $+\infty$。
 
 \subsection{同直径圆的覆盖问题}
-直径只约束任意两点之间的距离，并不保证存在同直径的覆盖圆。取三角形顶点
+直径只代表任意两点之间的距离，不能保证存在同直径的覆盖圆。下面采用反证法进行证明，假设以定位区域直径为直径的圆必定能够覆盖此定位区域。取三角形顶点
 \begin{equation}
  V_1=(0,0),\quad V_2=(40,0),\quad V_3=(20,20\sqrt3),
 \end{equation}
@@ -281,7 +281,7 @@ $x=\sum_i\lambda_i v_i$、$y=\sum_j\mu_jv_j$，其中系数非负且各自和为
  S_3&=(620,620\sqrt3),&\theta_3&=241^\circ.
 \end{aligned}\label{eq:b26-counterexample}
 \end{equation}
-每个角域的一条边界恰为三角形的一条支撑直线，另一条边界所确定的半平面包含全部三个顶点；各顶点相对角域下边界的偏角为 $0^\circ$ 或约 $1.6264^\circ$，落在宽度 $2^\circ$ 的观测角域内。因此三次观测的交集恰为该三角形。取三角形重心为真实源、接收半径为 $1500\,\mathrm m$，检测距离和角误差均符合题设。
+每个角域的一条边界恰为三角形的一条边所在直线，另一条边界所确定的半平面包含全部三个顶点；各顶点相对角域下边界的偏角为 $0^\circ$ 或约 $1.6264^\circ$，处在宽度 $2^\circ$ 的观测角域内。因此三次观测的交集恰为该三角形。取三角形重心为真实源、接收半径为 $1500\,\mathrm m$，检测距离和角误差均符合题设。
 
 记重心为 $g_0$，对任意圆心 $c$，有
 \begin{equation}
@@ -290,9 +290,14 @@ $x=\sum_i\lambda_i v_i$、$y=\sum_j\mu_jv_j$，其中系数非负且各自和为
 \end{equation}
 因此至少一个顶点到圆心的距离不小于 $40/\sqrt3$；取 $c=g_0$ 可达到该下界。最小包围圆半径为 $23.0940\,\mathrm m>20\,\mathrm m$，不存在直径为 $40\,\mathrm m$ 的覆盖圆，如图~\ref{fig:b26-triangle}所示。
 \begin{figure}[htbp]
- \centering\includegraphics[width=0.70\linewidth]{image/q1_counterexample.pdf}
+ \centering\includegraphics[width=0.70\linewidth]{image/q1_triangle_counterexample.pdf}
  \caption{三次测向形成的等边三角形及其最小包围圆}\label{fig:b26-triangle}
 \end{figure}
+
+因此存在反例，可知假设不成立。
+
+故以定位区域直径为直径的圆不一定能覆盖此定位区域。
+
 \subsection{最小包围圆与光学清除判据}
 一般情况下，最小包围圆问题写为
 \begin{equation}

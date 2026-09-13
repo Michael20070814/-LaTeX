@@ -716,7 +716,7 @@ $225.40$ 秒/个。
  \label{fig:q4-miss}
 \end{figure}
 
-本问不要求预先辨认源的类型。两类源的正常示向度均可用于角域及最大接收距离约束；无信号则可能由距离过远或方向遮挡造成，不能据此排除检测点附近的源位置。因而本问保留正常观测形成的可行区域，不再使用式~\eqref{eq:b26-positive-negative}的正负测量距离比较。
+本问混合存在全向源和定向源，而求解器事先无从知道哪个频道属于定向源，故不对两类源作区分。两类源的正常示向度均可用于角域及最大接收距离约束；无信号则可能由距离过远或方向遮挡造成，不能据此排除检测点附近的源位置。因而本问保留正常观测形成的可行区域，不再使用式~\eqref{eq:b26-positive-negative}的正负测量距离比较。
 
 \subsection{任意发射方向下的可发现性条件}
 对可能源位置 $g$，设有一组距离不超过 $1000\,\mathrm m$ 的检测站 $\{S_i:i\in I(g)\}$。若
@@ -789,17 +789,21 @@ $225.40$ 秒/个。
 这两个条件分别解决遗漏源和遗留源问题。对未发现频道，假设存在源，则双环覆盖保证至少有一个站能收到信号，与完整扫描记录矛盾。对已发现频道，则根据实际成功反馈确认完成。对已知源跳过一次补测不会影响未知频道的覆盖证明，但跳过的检测也不能被记作不存在依据。
 
 因此，终止条件可写为
+
 \begin{equation}
-|\mathcal D|=16
-\quad\text{或}\quad
-\left\{
-\begin{aligned}
-\mathcal H\setminus\mathcal D &= \varnothing,\\
-\text{每个未发现频道均已完成全部覆盖站检测。}
-\end{aligned}
-\right.
+\mathrm{Stop}\Longleftrightarrow
+\bigl(|\mathcal D|=16\bigr)
+\lor
+\Bigl[
+\bigl(\mathcal H\setminus\mathcal D=\varnothing\bigr)
+\land \mathsf{CoverAll}(\mathcal C\setminus\mathcal H)
+\Bigr].
 \label{eq:q4-stop}
 \end{equation}
+
+其中，$\mathsf{CoverAll}(\mathcal C\setminus\mathcal H)$
+表示所有未发现频道均已完成全部覆盖站检测。
+
 数量较少的场景仍需为剩余未知频道完成覆盖，而恰有 $16$ 个源的场景可能提前结束扫描。这解释了平均每源时间不仅受目标数量影响，也受发现顺序和源位置影响。
 
 \subsection{实验结果与分析}
@@ -823,9 +827,7 @@ JSH3-8CAA-UJWN-67EG & 16 & 224.04 & 未记录 \\
 \end{tabular}
 
 \vspace{2pt}
-{\footnotesize 注：第 3 列由该次测试的总虚拟时间除以清除源数得到；三次的总虚拟时间
-依次为 $5930.06$、$5915.95$、$3584.57$ 秒，合计 $15430.58$ 秒。程序运行时间为界面上
-显示、但本次未予记录的量，故标注“未记录”，不以虚拟时间代替。}
+
 \end{table}
 
 三次的逐例每源时间为 $539.10$、$591.60$、$224.04$ 秒/个，算术均值 $451.58$ 秒/个，
@@ -837,13 +839,14 @@ JSH3-8CAA-UJWN-67EG & 16 & 224.04 & 未记录 \\
 
 
 \begin{figure}[H]
- \centering\includegraphics[width=0.76\linewidth]{image/q4_trajectory.pdf}
- \caption{第四问代表性合成案例的实际动作轨迹；定向朝向由事后真值记录绘制}\label{fig:q4-trajectory}
+ \centering\includegraphics[width=0.76\linewidth]{image/3.png}
+ \caption{第四问模拟案例的实际动作轨迹；定向朝向由模拟记录绘制}\label{fig:q4-trajectory}
 \end{figure}
 
 \section{模型检验与稳健性分析}
 \subsection{几何计算与数值边界检验}
-测向与覆盖模型的可靠性依赖于可行区域的保守更新。理论推导采用 $1^\circ$ 角误差；针对接口读数保留两位小数的情况，数值实现增加半个舍入单位，使用 $1.005^\circ$ 角域。距离圆采用外切多边形，覆盖与清除半径则向内留出余量，防止因舍入而提前确认整个区域已被覆盖。
+其中，$\mathsf{CoverAll}(\mathcal C\setminus\mathcal H)$
+表示所有未发现频道均已完成全部覆盖站检测。
 
 第一问以枚举一、二、三点支撑圆作为独立对照，对 $200$ 组随机点集检验增量包围圆，半径最大差为 $9.09\times10^{-13}\,\mathrm m$；另对 $200$ 组、每组四次合成测向检查真实目标可行性，均通过。典型测试同时覆盖空集、单点、线段和无界角域，避免只验证正常多边形。
 

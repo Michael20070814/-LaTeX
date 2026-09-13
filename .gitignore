@@ -22,6 +22,8 @@
 
 # Generated PNG previews; existing tracked manuscript images remain tracked.
 /image/*.png
+!/image/content_table.png
+!/image/proof.png
 
 # Local environments, caches, and editor files.
 .venv/
